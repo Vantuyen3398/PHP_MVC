@@ -1,5 +1,5 @@
 <?php  
-	include './model/model.php';
+	include 'model/model.php';
 	// include 'libs/function.php';
 	class Controller{
 		public function handleRequest(){
@@ -112,8 +112,15 @@
 					include 'send_mail/resetpass.php';
 					break;
 				case 'listuser':
-					$model = new Model();
-					$list = $model -> getAllUser();
+					$keyword = isset($_GET['keyword']) ? $_GET['keyword'] : '';
+					if(!empty($keyword)){
+						$model = new Model();
+						$search = $model -> searchUser($keyword);
+					}
+					else{
+						$model = new Model();
+						$list = $model -> getAllUser();
+					}
 				include 'view/list_user.php';
 				break;
 				default:

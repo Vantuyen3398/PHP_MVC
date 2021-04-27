@@ -1,6 +1,6 @@
 <?php  
 	session_start();
-	include './controller/controller.php';	
+	include 'controller/controller.php';	
 ?>
 <!DOCTYPE html>
 <html>
@@ -39,8 +39,8 @@
 			</row>
 			<row>
 				<ul class="infor">
+					<li><img src="" alt="avatar"></li>
 					<?php if(isset($_SESSION['login']['username'])){?>
-					<li><img src="uploads/users/" alt="avatar" class="avatar_user"></li>
 					<li><?php echo $_SESSION['login']['username'];?><a href="index.php?action=logout"> Logout</a></li>
 				<?php } ?>
 				</ul>

@@ -57,20 +57,6 @@
 				}
 			}
 		}
-		function Filter($key){
-			if(file_exists("uploads/user.txt")){
-				$r = fopen("uploads/user.txt", "r");
-				while (!feof($r)) {
-					$row = fgets($r);
-					if (!empty($row)) {
-						$arr = explode(",", $row);
-						if ($arr[1] == $key || $arr[2] == $key){
-							return true;
-						}
-					}
-				}
-			}
-		}
 		function getAllUser(){
 			$file = "uploads/user.txt";
 			if (file_exists($file)) {
@@ -84,19 +70,19 @@
 				return $members;
 			}
 		}
-		function deleteUser(){
-			$file = "uploads/user.txt";
-			if (file_exists($file)) {
-				$r = fopen($file, "r");
-				while (!feof($r)) {
-					$row = fgets($r);
-					if (!empty($row)) {
-						$members[] = explode(",", $row);
-						if($arr[2] == $username){
-							return $username;
-						}
-					}
-				}
+		function searchUser($keyword){
+			$matches = array();
+			$handle = @fopen("uploads/user.txt", "r");
+			if ($handle)
+			{
+			    while (!feof($handle))
+			    {
+			        $buffer = fgets($handle);
+			        if(strpos($buffer, $keyword) !== FALSE)
+			            $matches[] = explode(",", $buffer);
+			    }
+			    // fclose($handle);
+			    return $matches;
 			}
 		}
 	}
