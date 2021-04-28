@@ -28,7 +28,13 @@
     			<input type="date" id="date" name="date"> 
 
     			<p class="contact"><label for="img">Avatar</label></p> 
-    			<input type="file" id="avatar" name="avatar" > 
+    			<input type="file" id="avatar" name="avatar" >
+
+                <p class="contact"><label for="role">Role</label></p> 
+                    <select name="role">
+                        <option value="admin">Admin</option>
+                        <option value="customer">Customer</option>
+                    </select>
 
             <input class="buttom" name="submit" id="submit" tabindex="5" value="Register" type="submit" > 	 
    	</form> 

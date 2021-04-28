@@ -23,17 +23,20 @@
 							move_uploaded_file($_FILES['avatar']['tmp_name'], $pathUpload.$_FILES['avatar']['name']);
 							$avatar = $_FILES['avatar']['name'];
 						}
+						$role = $_POST['role'];
 
 						$model = new Model();
 						$errorExistUser = '';
 						$checkExistUser = $model->checkExistUser($email, $username);
-						if ($checkExistUser) {
+						if ($checkExistUser != false) {
 							$errorExistUser = 'Exist email or username';
 						}else
 							{
-								if ($model->addUser($name, $email, $username, $password, $created,$avatar) === True) {
-									// $functionCommon->redirectPage('index.php?action=register');
-									// header("Location:index.php");
+								if ($model->addUser($name, $email, $username, $password, $created,$avatar,$role) === True) {
+									$login['username'] = $username;
+									$login['role'] = $role;
+									$_SESSION['login'] = $login;
+									header("Location: index.php");
 								}
 							}
 					}
@@ -50,10 +53,13 @@
 								$_SESSION['login'] = $login;
 								header("Location:index.php");
 							}
-							
 						}
-						include 'view/login.php';
+						include 'login.php';
 						break;
+					case 'logout':
+						unset($_SESSION['login']);
+						header("Location: index.php");
+					break;
 				case 'chagne':
 					if(isset($_POST['submit']) && $_POST['email'])	{
 						$emailId = trim($_POST['email']);
@@ -104,10 +110,6 @@
 					}
 					include 'view/chagne.php';
 					break;
-				case 'logout':
-						unset($_SESSION['login']);
-						header("Location: index.php");
-					break;
 				case 'reset':
 					include 'send_mail/resetpass.php';
 					break;
@@ -120,7 +122,20 @@
 					else{
 						$model = new Model();
 						$list = $model -> getAllUser();
+						if($list){
+							foreach($list as $item){
+							}	if (isset($item[2])) {
+			                    	$username = $item[2];
+			                    	$delete = $model -> deleteUser($username);
+                				
+							}
+
+						}
+						
+						
 					}
+					$size = count($list);
+					$pageTotal = ceil($size / 3);
 				include 'view/list_user.php';
 				break;
 				default:

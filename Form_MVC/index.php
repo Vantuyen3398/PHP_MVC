@@ -12,41 +12,37 @@
 	<link rel="stylesheet" href="css/register.css">
 	<script src="js/validate.js"></script>
 	<style>
-		.infor a{
-			margin-left: 5px;
-			text-decoration: none;
-			color: lightseagreen;
-			padding: 5px;
-			border: 1px solid lightseagreen;
-			box-sizing: border-box;
-			border-radius: 15px;
-			background-color: lightyellow;
-			border: none;
-		}
 	</style>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 </head>
 <body>
-	<div class="container">
-		<div class="top-bar">
-			<row>
-				<ul class="menu">
-					<li><a href="index.php">Home</a></li>
-					<li><a href="index.php?action=register">Register</a></li>
-					<li><a href="index.php?action=login">Login</a></li>
-					<li><a href="index.php?action=chagne">Chagne PassWord</a></li>
-					<li><a href="index.php?action=listuser">List User</a></li>
-				</ul>
-			</row>
-			<row>
-				<ul class="infor">
-					<li><img src="" alt="avatar"></li>
-					<?php if(isset($_SESSION['login']['username'])){?>
-					<li><?php echo $_SESSION['login']['username'];?><a href="index.php?action=logout"> Logout</a></li>
-				<?php } ?>
-				</ul>
-			</row>
-		</div>
-	</div>
+	<nav class="nav nav-pills nav-justified">
+  		<a class="nav-link active" aria-current="page" href="index.php">Home</a>
+  		<a class="nav-link" href="index.php?action=chagne">Chagne PassWord</a>
+  		<?php
+  			if(isset($_SESSION['login']))
+  			{
+  		?>
+  				<a class="nav-link" href="index.php?controller=users&action=listuser">List User</a>
+  		<?php } ?>  
+  		 <!-- <a class="nav-link" href="index.php?controller=users&action=listuser">List User</a> -->
+  		<ul class="infor"> 
+			<!-- <li>
+				<img src="http://localhost:8080/Form_MVC/uploads/users/<?php echo $item?>" alt="avatar">
+			</li> -->
+			<?php 
+				if(isset($_SESSION['login']['username']))
+				{?>
+					<li class="logout">Hi, <?php echo $_SESSION['login']['username'];?>
+						<a href='index.php?controller=users&action=logout'>Logout</a>
+					</li>
+			<?php } else { ?>
+					<a class="nav-link" href='index.php?controller=users&action=login'>Login</a>
+					<a class="nav-link" href='index.php?controller=users&action=register'>Register</a>
+			<?php } ?>
+		</ul>
+	</nav>
 	<?php 
 		$controller = new Controller();
 		$controller->handleRequest();

@@ -4,11 +4,11 @@
 	 */
 	class Model
 	{
-		function addUser($name, $email, $username, $password, $created,$avatar){
+		function addUser($name, $email, $username, $password, $created,$avatar,$role){
 			$created = date('Y-m-d h:i:s');
 			if (file_exists("uploads/user.txt")) {
 				$a = fopen("uploads/user.txt", "a");
-				fwrite($a, $name.",".$email.",".$username.",".$password.",".$created.",".$avatar."\r\n");
+				fwrite($a, $name.",".$email.",".$username.",".$password.",".$created.",".$avatar.",".$role."\r\n");
 				
 			}
 		}
@@ -25,6 +25,7 @@
 						}
 					}
 				}
+				
 			}
 		}
 
@@ -84,6 +85,30 @@
 			    // fclose($handle);
 			    return $matches;
 			}
+		}
+		function deleteUser($username){
+			$matches = array();
+			$handle = @fopen("uploads/user.txt", "r");
+			if ($handle)
+			{
+			    while (!feof($handle))
+			    {
+			        $buffer = fgets($handle);
+			        if(strpos($buffer, $username) !== FALSE)
+			            $matches[] = explode(",", $buffer);
+			    	}
+			    }
+			    if($matches !== FALSE){
+			    	unset($handle[$matches]);
+				}
+				// $newFile[] = implode(",", $matches); 
+			 //    $handle = fopen("uploads/user.txt", "w");
+			 //    if ($handle) {
+			 //        fwrite($handle, $newFile); 
+			 //        fclose($handle);
+			 //    }
+		}
+		function Pagination(){
 		}
 	}
 ?>
